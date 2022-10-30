@@ -37,7 +37,6 @@ INSTALLED_APPS = [
     'djoser',
     'rest_framework_simplejwt',
     'mainapp',
-    'mail_templated',
 ]
 
 MIDDLEWARE = [
@@ -190,8 +189,8 @@ EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_USE_TLS = True
 EMAIL_PORT = 587
-# EMAIL_HOST_USER = env('EMAIL_HOST_USER')
-# EMAIL_HOST_PASSWORD = env('EMAIL_HOST_PASSWORD')
+EMAIL_HOST_USER = 'djangoresttest123@gmail.com'
+EMAIL_HOST_PASSWORD = 'zcbnmrvpyroteasi'
 
 # REST_FRAMEWORK = {
 #     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',

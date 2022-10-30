@@ -5,7 +5,6 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 
 
-
 class User(AbstractUser):
 
     def __str__(self) -> str:
@@ -29,9 +28,11 @@ class Company(models.Model):
     def vacancy_amount(self):
         return self.vacancies.all().count()
 
+    @property
     def event_amount(self):
         return self.events.all().count()
 
+    @property
     def video_amount(self):
         return self.videos.all().count()
 
@@ -46,11 +47,6 @@ class Vacancy(models.Model):
 
     def __str__(self):
         return self.type_work
-
-
-    # @receiver(post_save, sender=User)
-    # def create_vacancy(sender, instance, created, **kwargs):
-    #     if
 
 
 class VacancyDescription(models.Model):
@@ -89,3 +85,16 @@ class Video(models.Model):
 
     def __str__(self):
         return self.title
+
+
+@receiver(post_save, sender=Vacancy)
+def create_vacancy(sender, instance, created, **kwargs):
+    from mainapp.send_gmail import send_msg_vacancy
+    if created:
+        send_msg_vacancy(instance.type_work, instance.salary, instance.currency)
+
+# @receiver(post_save, sender=Event)
+# def create_event(sender, instance, created, **kwargs):
+#     from mainapp.send_gmail import send_msg_event
+#     if created:
+#         send_msg_event(instance.title, instance.description, instance.start_at, instance.end_at, instance.location)
